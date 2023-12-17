@@ -97,6 +97,7 @@ class ArrayList{
                 }
                 delete current;
             }
+            _size--;
         }
 
         void removeAll(T val){}
@@ -106,11 +107,7 @@ class ArrayList{
         }
 
         void clear(){
-            Node<T>* current = head;
-            while(current){
-                current = current->next;
-                delete current->previous;
-            }
+
         }
 
         /* ACCES METHODS*/
@@ -205,6 +202,7 @@ int main() {
     cout << "Imprimiendo " << v.print() << endl;
     cout << v.contains(17) << endl;
     cout << v.indexOf(15) << endl;
+    v.clear();
     cout << "Imprimiendo " << v.print() << endl;
 
     /*
