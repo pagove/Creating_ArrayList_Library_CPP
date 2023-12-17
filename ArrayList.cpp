@@ -25,6 +25,7 @@ class ArrayList{
 
         ArrayList(): _size(0), head(nullptr), tail(nullptr){};
 
+        /*ADD METHODS*/
         void add(T val){
             Node<T>* newNode = new Node<T>();
             newNode->value = val;
@@ -33,9 +34,141 @@ class ArrayList{
                 tail = newNode;
             } else {
                 tail->next = newNode;
+                newNode->previous = tail;
                 tail = newNode;
             }
             _size++;
+        }
+
+        void addAll(ArrayList<T> ar){
+            Node<T>* current = ar.head;
+            while(current){
+                add(current->value);
+                current = current->next;
+            }
+        }
+
+        void set(int index, T val){
+            if(index < _size && index >= 0){
+                int med = _size / 2;
+                Node<T>* current;
+                if(index <= med){
+                    current = head;
+                    for(int i = 0; i < index; i++){
+                        cout << current->value << endl;
+                        current = current->next;
+                    }
+                } else {
+                    current = tail;
+                    for(int i = _size -1; i > index; i--){
+                        cout << current->value << endl;
+                        current = current->previous;
+                    }
+                }
+                current->value = val;
+            }
+        }
+
+
+        /* REMOVE METHODS*/
+
+        void remove(T val){
+            Node<T>* current = head;
+            bool found = false;
+            int pos = -1;
+            while(current && !found ){
+                pos++;
+                if(current->value == val){
+                    found=true;
+                } else {
+                    current = current->next;
+                }
+            }
+            if(found){
+                if(pos == 0){
+                    head = current->next;
+                    head->previous = nullptr;
+                } else if(pos == (_size -1)){
+                    tail = current->previous;
+                    tail->next = nullptr;
+                } else {
+                    current->previous->next = current->next;
+                    current->next->previous = current->previous;
+                }
+                delete current;
+            }
+        }
+
+        void removeAll(T val){}
+
+        void removeAt(int index){
+
+        }
+
+        void clear(){
+            Node<T>* current = head;
+            while(current){
+                current = current->next;
+                delete current->previous;
+            }
+        }
+
+        /* ACCES METHODS*/
+        T getAt(int pos){
+            int med = _size / 2;
+            Node<T>* current;
+            if(pos <= med){
+                 current = head;
+                for(int i = 0; i < pos; i++){
+                    current = current->next;
+                }
+                return current->value;
+            } else {
+                current = tail;
+                for(int i = _size -1; i > pos; i--){
+                    current = current->previous;
+                }
+                return current->value;
+            }
+            return false;
+        }
+
+        int indexOf(T val){
+            int index = -1;
+            Node<T>* current = head;
+            bool found = false;
+            while(current && !found){
+                index++;
+                if(current->value == val){
+                    found = true;
+                }
+                current = current->next;
+            }
+            if(found){
+                return index;
+            } else {
+                return -1;
+            }
+        }
+
+        bool contains(T val){
+            Node<T>* current  = head;
+            bool found = false;
+            while(current && !found){
+                if(current->value == val) {
+                    found = true;
+                }
+                current = current->next;
+            }
+
+            return found;
+        }
+
+        int size(){
+            return _size;
+        }
+        bool isEmpty(){
+            return _size == 0;
         }
 
         string print() {
@@ -52,23 +185,9 @@ class ArrayList{
             return ret;
         }
 
-        int size(){
-            return _size;
-        }
+        ArrayList<T> subList(int fromIndex, int toIndex){
 
-        T getAt(int pos){
-            Node<T>* current = head;
-            for(int i = 0; i <= _size; i++){
-                cout << "ENTRA" << endl;
-                if(i == pos){
-                    return current->value;
-                } else {
-                    current = current->next;
-                }
-            }
-            return false;
         }
-
 
 
     private:
@@ -80,14 +199,25 @@ class ArrayList{
 int main() {
 
    ArrayList<int> v;
-   for(int i = 10; i < 20; i++){
+   for(int i = 10; i < 15; i++){
        v.add(i);
     }
+    cout << "Imprimiendo " << v.print() << endl;
+    cout << v.contains(17) << endl;
+    cout << v.indexOf(15) << endl;
+    cout << "Imprimiendo " << v.print() << endl;
 
+    /*
+    cout << "Imprimiendo " << v.print() << endl;
+    cout << "GetAt 0 " << v.getAt(0) << endl;
+    cout << "GetAt 1 " << v.getAt(1) << endl;
+    cout << "GetAt 2 " << v.getAt(2) << endl;
+    cout << "GetAt 3 " << v.getAt(3) << endl;
+    cout << "GetAt 4 " << v.getAt(4) << endl;
 
    cout << "Tam " << v.size() << endl;
-   cout << "getAt() " << v.getAt(-1) << endl;
+   cout << "getAt() " << v.getAt(2) << endl;
    cout << "Imprimiendo " << v.print() << endl;
-
+*/
     return 0;
 }
