@@ -1,7 +1,7 @@
 #include <iostream>
+
 using namespace std;
 
-// Definición de la clase con plantilla
 template <typename T>
 class Node {
     public:
@@ -100,15 +100,64 @@ class ArrayList{
             _size--;
         }
 
-        void removeAll(T val){}
+        void removeAll(T val){
+            Node<T>* current = head;
+            int pos = -1;
+            while(current){
+                pos++;
+                if(current->value == val){
+                    Node<T>* nextNode = current;
+                    if(pos == 0){
+                        head = current->next;
+                    }else if (pos == _size -1){
+                        tail = current->previous;
+                    }
+                    delete current;
+                    current = nextNode;
+                    _size--;
+                }
+            }
+        }
 
         void removeAt(int index){
-
+            int cont = 0;
+            Node<T>* current = head;
+            if(index == 0){
+                head = current->next;
+                head->previous = nullptr;
+                delete current;
+            } else if(index == (_size - 1)) {
+                current = tail;
+                tail = current->previous;
+                tail->next = nullptr;
+                delete current;
+            } else {
+                while(current->next){
+                    if(cont == index){
+                        current->previous->next = current->next;
+                        current->next->previous = current->previous;
+                        delete(current);
+                        break;
+                    }
+                    current = current->next;
+                    cont++;
+                }
+            }
+            _size--;
         }
 
-        void clear(){
-
+        void clear() {
+            Node<T>* current = head;
+            while (current) {
+                Node<T>* nextNode = current->next;
+                delete current;
+                current = nextNode;
+            }
+            head = tail = nullptr;
+            _size = 0;
         }
+
+
 
         /* ACCES METHODS*/
         T getAt(int pos){
@@ -183,7 +232,17 @@ class ArrayList{
         }
 
         ArrayList<T> subList(int fromIndex, int toIndex){
-
+            int cont = -1;
+            ArrayList<T> rest;
+            Node<T>* current = head;
+            while(current->next && cont < toIndex){
+                cont++;
+                if(cont >= fromIndex && cont <= toIndex){
+                    rest.add(current->value);
+                }
+                current = current->next;
+            }
+            return rest;
         }
 
 
@@ -196,13 +255,14 @@ class ArrayList{
 int main() {
 
    ArrayList<int> v;
+   ArrayList<int> rt;
    for(int i = 10; i < 15; i++){
        v.add(i);
     }
     cout << "Imprimiendo " << v.print() << endl;
-    cout << v.contains(17) << endl;
-    cout << v.indexOf(15) << endl;
-    v.clear();
+    cout << "TAM " << v.size() << endl;
+    rt = v.subList(0,2);
+    cout << "Imprimiendo sublista " << rt.print() << endl;
     cout << "Imprimiendo " << v.print() << endl;
 
     /*
