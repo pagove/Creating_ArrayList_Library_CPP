@@ -252,30 +252,4 @@ class ArrayList{
         Node<T>* tail;
 };
 
-int main() {
 
-   ArrayList<int> v;
-   ArrayList<int> rt;
-   for(int i = 10; i < 15; i++){
-       v.add(i);
-    }
-    cout << "Imprimiendo " << v.print() << endl;
-    cout << "TAM " << v.size() << endl;
-    rt = v.subList(0,2);
-    cout << "Imprimiendo sublista " << rt.print() << endl;
-    cout << "Imprimiendo " << v.print() << endl;
-
-    /*
-    cout << "Imprimiendo " << v.print() << endl;
-    cout << "GetAt 0 " << v.getAt(0) << endl;
-    cout << "GetAt 1 " << v.getAt(1) << endl;
-    cout << "GetAt 2 " << v.getAt(2) << endl;
-    cout << "GetAt 3 " << v.getAt(3) << endl;
-    cout << "GetAt 4 " << v.getAt(4) << endl;
-
-   cout << "Tam " << v.size() << endl;
-   cout << "getAt() " << v.getAt(2) << endl;
-   cout << "Imprimiendo " << v.print() << endl;
-*/
-    return 0;
-}
